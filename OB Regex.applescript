@@ -45,7 +45,7 @@ on extractPostCodeFrom(thisAddress)
 	return {thisAddress, postcode, theCountry}
 end extractPostCodeFrom
 
-on extractState from thisAddress given db:thisDB
+on extractState from thisAddress given listOfValidStates:theStates as list
 	(*
 this function presumes that trailing white space has been stripped from the address string before passing it to this function
 if that's not a safe assumption then trailing white space should first be stripped from the address string before processing
@@ -56,7 +56,6 @@ such a result could detect states from other countries e.g. the US, but not all 
 such an approach would not detect states that are spelled in full, though that is relatively unlikely
 *)
 	doOBLog of OBUtility for "Extracting state from " & thisAddress given logType:"debug"
-	set theStates to listStatesWithAbbreviations of OBData for thisDB
 	set theState to "" -- so we can test to see if the following code is successful in assigning a state or not
 	repeat with aState in theStates
 		-- add leading space so that it matches whole words only
